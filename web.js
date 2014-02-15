@@ -11,7 +11,7 @@ app.post('/sms', function(req, res) {
     var twiml = new twilio.TwimlResponse();
     twiml.message('Hello World, you said: ' + req.body.Body);
     var fbase = new Firebase('https://flickering-fire-2682.firebaseio.com/');
-    fbase.push({'number':req.body.from, 'text':req.body.Body});
+    fbase.push({'number':req.body.From, 'text':req.body.Body});
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
 });
