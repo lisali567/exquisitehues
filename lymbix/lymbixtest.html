@@ -4,8 +4,67 @@
 <script type="text/javascript" src="jquery.lymbix.js"></script>
 
 <script type="text/javascript">
-  var lymbix = $.lymbix("e731075e67424ea761d9ed92db007d26f5d88d9c"); 
-  lymbix.tonalizeDetailed("I think you should get off your pedestal.", function (object) { alert(object['dominant_emotion']); });
-  </script>
+/*
+blue -> red?
+
+positive:
+enjoyment_elation
+affection_friendliness
+amusement_excitement
+contentment_gratitude
+
+Neutral - white?
+
+negative:
+fear_uneasiness
+sadness_grief
+humiliation_shame
+anger_loathing
+*/
+  
+
+function lymbixit(phrase) {
+
+
+}
+
+function evalColor(score) {
+var r, g, b;
+if(score > 0) {
+r = 22.9*score - 229;
+g = -14.3*score + 292;
+b = -15.7*score + 348;
+}
+else {
+r = 22.9*score*-2 - 229;
+g = -14.3*score*-2 + 292;
+b = -15.7*score*-2 + 348;
+}
+return [r, g, b];
+}
+
+function domEmotion(phrase) {
+var lymbix = $.lymbix("e731075e67424ea761d9ed92db007d26f5d88d9c"); 
+lymbix.tonalizeDetailed(phrase, function (object) { 
+$("#phrase").html(object['article']);
+$("#text").html(object['dominant_emotion'].replace("_"," & "));
+var rgb = evalColor(object['article_sentiment']['score']);
+$("#colors").css('color', "rgb("+rgb[0]+", "+rgb[1]+", "+rgb[2]+")");
+});
+}
+
+</script>
 </head>
+
+<body onload="domEmotion('I love you!')">
+Phrase: <span id="phrase"></span>
+<br/>
+<br/>
+Dom Emotion: <span id="text"></span>
+<br/>
+<br/>
+Color Values: <span id="colors">COLOR!</span>
+
+</body>
+
 </html>
