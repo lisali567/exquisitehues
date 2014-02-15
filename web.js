@@ -4,10 +4,11 @@ var app = express();
 var twilio = require("twilio");
 
 app.use(logfmt.requestLogger());
+app.use(express.bodyParser());
 
-app.get('/', function(req, res) {
+app.post('/sms', function(req, res) {
     var twiml = new twilio.TwimlResponse();
-    twiml.message('Hello World!');
+    twiml.message('Hello World, you said: ' + req.body.body);
 
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
