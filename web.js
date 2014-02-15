@@ -7,7 +7,7 @@ app.use(logfmt.requestLogger());
 
 app.get('/', function(req, res) {
     var twiml = new twilio.TwimlResponse();
-    twiml.say('Hello World!');
+    twiml.message('Hello World!');
 
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
