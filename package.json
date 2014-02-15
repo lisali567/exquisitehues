@@ -28,7 +28,8 @@
     "time-grunt": "~0.2.1",
     "grunt-karma": "~0.6.2",
     "karma-ng-html2js-preprocessor": "~0.1.0",
-    "karma-ng-scenario": "~0.1.0"
+    "karma-ng-scenario": "~0.1.0",
+    "twilio": "~1.5.0"
   },
   "engines": {
     "node": ">=0.8.0"
