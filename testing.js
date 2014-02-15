@@ -17,9 +17,9 @@ client.messages.list({
 	data.messages.forEach(function(message) {
 		console.log(message.body);
 		console.log(message.from);
-		var teststuff = myRootRef.child('messages'+i);
-		teststuff.update({'number':message.from, 'body':message.body});
-		console.log("k");
-		i++;
+		//		var teststuff = myRootRef.child('messages'+i);
+		//teststuff.update({'number':message.from, 'body':message.body});
+		//console.log("k");
+		//i++;
 	    });
     });
