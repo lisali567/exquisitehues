@@ -8,8 +8,7 @@ app.use(express.bodyParser());
 
 app.post('/sms', function(req, res) {
     var twiml = new twilio.TwimlResponse();
-    console.log(req.body);
-    twiml.message('Hello World, you said: ' + req.body.body);
+    twiml.message('Hello World, you said: ' + req.body.Body);
 
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
