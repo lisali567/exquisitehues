@@ -1,17 +1,18 @@
-var twilio = require('twilio');
+var express = require("express");
+var logfmt = require("logfmt");
+var app = express();
 
-var resp = new twilio.TwimlResponse();
+app.use(logfmt.requestLogger());
 
+app.get('/', function(req, res) {
+    var twiml = new twilio.TwimlResponse();
+    twiml.say('Hello World!');
 
-
-resp.message('Welcome to Twilio!');
-
-resp.message('Please let us know if we can help during your development.', {
-
-
-
+    res.writeHead(200, {'Content-Type': 'text/xml'});
+    res.end(twiml.toString());
 });
 
-
-
-console.log(resp.toString());
+var port = Number(process.env.PORT || 5000);
+app.listen(port, function() {
+  console.log("Listening on " + port);
+});
