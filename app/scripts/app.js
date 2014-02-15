@@ -1,11 +1,6 @@
 'use strict';
 
-angular.module('exquisitehuesApp', [
-  'ngCookies',
-  'ngResource',
-  'ngSanitize',
-  'ngRoute'
-])
+angular.module('exquisitehuesApp', [ 'ngRoute' ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
