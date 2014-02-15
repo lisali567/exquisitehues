@@ -17,3 +17,8 @@ Exquisite Hues
 ##Other
 * glue above things together
 * how to deploy
+
+
+#Firebase structure
+https://flickering-fire-2682.firebaseio.com/<unique_poem_id>/<unique_line_id>/{author, text, line #}
+https://flickering-fire-2682.firebaseio.com/<unique_poem_id>/<no_of_lines>
