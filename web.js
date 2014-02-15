@@ -2,6 +2,7 @@ var express = require("express");
 var logfmt = require("logfmt");
 var app = express();
 var twilio = require("twilio");
+var Firebase = require('firebase');
 
 app.use(logfmt.requestLogger());
 app.use(express.bodyParser());
@@ -9,7 +10,8 @@ app.use(express.bodyParser());
 app.post('/sms', function(req, res) {
     var twiml = new twilio.TwimlResponse();
     twiml.message('Hello World, you said: ' + req.body.Body);
-
+    var fbase = new Firebase('https://flickering-fire-2682.firebaseio.com/');
+    fbase.push({'number':req.body.from, 'text':req.body.Body});
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
 });
