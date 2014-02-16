@@ -36,9 +36,8 @@ app.post('/sms', function(req, res) {
     poemString += prevLine;
     var ref = newPoem.push( { 'number': author, 'text': text } );
     newPoem.update( { 'counter': line, 'fulltext': poemString } );
-    fbase.update( { 'lastLine': poemString } );
+    fbase.update( { 'lastLine': prevLine, 'lastRef': ref.name() } );
     line++;
-    fbase.update( { 'lastRef': ref.name() } );
     teleNum = [];
     if(line === 5){
       line = 1;
