@@ -4,13 +4,13 @@ var twilio = require('twilio');
 var Firebase = require('firebase');
 //var $ = jQuery = require('jquery');
 //var websocket = require('websocket');
-var $ = require('jquery/dist/jquery')$(window); 
+var $ = require('jquery/dist/jquery')(window); 
 var lymbixLib = require('./lymbix/jquery.lymbix.js');
 var lymbix = $.lymbix("e731075e67424ea761d9ed92db007d26f5d88d9c");
 var accountSid = 'ACd4f90f2571958e3ac3f697dabb9b45dc';
 var authToken = process.env.TWILIO_AUTH_TOKEN;
 var client = require('twilio')(accountSid, authToken);
-var hue = require("node-hue-api"), HueApi = hue.HueApi, lightState = hue.lightState;
+/*var hue = require("node-hue-api"), HueApi = hue.HueApi, lightState = hue.lightState;
 
 
 var host = "192.168.1.129",
@@ -34,7 +34,7 @@ api = new HueApi(host, username);
 
 var dom_emo, intensity;
 
-
+*/
 var app = express();
 app.use(logfmt.requestLogger());
 app.use(express.bodyParser());
@@ -107,7 +107,7 @@ app.post('/sms', function(req, res) {
     twiml.message('Thanks for your contribution.');
 
     //ADD HUE stuff here send count, poemString, and prevLine to be analyzed
-
+/*
     lymbix.tonalize(text, function (obj) {
 	    dom_emo = obj['dominant_emotion'];
 	    console.log("h");
@@ -135,7 +135,7 @@ app.post('/sms', function(req, res) {
 	    if(err) throw err;
 	    displayResult(lights);
 	});
-
+*/
 
   } else{ //msg was to request last line
     if(line === 1) {
