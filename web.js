@@ -30,13 +30,14 @@ app.post('/sms', function(req, res) {
 
   if(numIndex !== -1) {
     if(line === 1) {
-      newPoem = fbase.push( { 'counter': line,  'full-text': poemString } );
+      newPoem = fbase.push( { 'counter': line,  'fulltext': poemString } );
     }
-    newPoem.push( { 'number': author, 'text': text } );
-    newPoem.update( { 'counter': line, 'full-text': poemString } );
+    var ref = newPoem.push( { 'number': author, 'text': text } );
+    newPoem.update( { 'counter': line, 'fulltext': poemString } );
     prevLine = text;
     poemString += prevLine;
     line++;
+    fbase.push( { 'lastRef': ref });
     teleNum = [];
     if(line === 5){
       line = 1;

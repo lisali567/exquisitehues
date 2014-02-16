@@ -15,10 +15,6 @@ angular.module('exquisitehuesApp', [ 'ngRoute', 'firebase' ])
     templateUrl: 'views/archive.html',
     controller: 'MainCtrl'
   })
-  .when('/addline', {
-    templateUrl: 'views/addline.html',
-    controller: 'AddCtrl'
-  })
   .otherwise({
     redirectTo: '/'
   });
@@ -27,7 +23,3 @@ angular.module('exquisitehuesApp', [ 'ngRoute', 'firebase' ])
   var ref = new Firebase('https://flickering-fire-2682.firebaseio.com/angulartest');
   return $firebase(ref);
 }]);
-// .factory('AddLineService', ['$firebase', function($firebase) {
-//   var ref = new Firebase('https://flickering-fire-2682.firebaseio.com/angulartest');
-//   return $firebase(ref);
-// }]);
