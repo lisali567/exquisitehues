@@ -9,7 +9,7 @@ app.use(express.bodyParser());
 
 var fbase = new Firebase('https://flickering-fire-2682.firebaseio.com/poems');
 
-var line = 0;
+var line = 1;
 var teleNum = [];
 var poemString = "";
 var prevLine = "";
@@ -29,7 +29,7 @@ app.post('/sms', function(req, res) {
   }
 
   if(numIndex !== -1) {
-    if(line === 0) {
+    if(line === 1) {
       newPoem = fbase.push( { 'counter': line } );
     }
     newPoem.push( { 'number': author, 'text': text } );
@@ -38,8 +38,8 @@ app.post('/sms', function(req, res) {
     poemString += prevLine;
     line++;
     teleNum = [];
-    if(line === 4){
-      line = 0;
+    if(line === 5){
+      line = 1;
       poemString = "";
     }
 
@@ -48,7 +48,7 @@ app.post('/sms', function(req, res) {
     //ADD HUE stuff here send count, poemString, and prevLine to be analyzed
 
   } else{
-    if(line === 0) {
+    if(line === 1) {
       twiml.message("Start a new poem!");
     } else {
       twiml.message("Here's the last line:\n " + prevLine + "\nrespond with the next one!");
