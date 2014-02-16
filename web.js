@@ -28,7 +28,7 @@ var fbase = new Firebase('https://flickering-fire-2682.firebaseio.com/poems');
 
 var line = 1;
 var teleNumLine = [];
-var teleNumPoem = [];
+var poemContributers = []; //phone numbers of people who have contributed
 var poemString = ''; //full poem
 var prevLine = ''; //last line of poem
 var newPoem;
@@ -46,52 +46,54 @@ app.post('/sms', function(req, res) {
     }
   }
 
-  if(numIndex !== -1) {
+  if(numIndex !== -1) { //message is to be a new line
     if(line === 1) {
       newPoem = fbase.push( { 'counter': line,  'fulltext': poemString } );
     }
     prevLine = text; //replce last line
-    poemString += prevLine; //add last line to full poem
+    poemString = poemString + '\n' + prevLine; //add last line to full poem
     var ref = newPoem.push( { 'number': author, 'text': text } );
     newPoem.update( { 'counter': line, 'fulltext': poemString } );
     fbase.update( { 'lastLine': prevLine, 'lastRef': ref.name() } );
     line++; //update line count
     teleNumLine = [];
-    if(line === 5){
+
+
+    if(line === 5){ //end of the poem
       line = 1; //reset line count
       poemString = ''; //reset full poem string
 
 
-      //send info to people 
-      for(var j = 0; j < teleNumPoem.length; j++) {
+      //send poem link to contributors
+      for(var j = 0; j < poemContributers.length; j++) {
       	client.messages.create({
-    	body: "Jenny please?! I love you <3", //change this l8r
-    	to: teleNumPoem[j],
+    	body: "Wanna see the completed poem? check out: linkkks", //change this l8r
+    	to: poemContributers[j],
     	from: "+17184049006"
 		}, function(err, message) {
     	process.stdout.write(message.sid);
 		});
       }
 
-      teleNumPoem = [];
+      poemContributers = [];
 
     }
-        //check to see if the author is already in teleNumPoem
+        //check to see if the author is already in poemContributers
     var authorFound = false; 
-  	for(var h = 0; h < teleNumPoem.length; h++) {
-      if(author === teleNumPoem[h]) {
+  	for(var h = 0; h < poemContributers.length; h++) {
+      if(author === poemContributers[h]) {
         authorFound = h;
       }
 	}
 
-	if(!authorFound){ //if author is not in teleNumPoem add him/her
-      teleNumPoem.push(author);
+	if(!authorFound){ //if author is not in poemContributers add him/her
+      poemContributers.push(author);
     }
     twiml.message('Thanks for adding a line to the poem');
 
     //ADD HUE stuff here send count, poemString, and prevLine to be analyzed
 
-  } else{
+  } else{ //msg was to request last line
     if(line === 1) {
       twiml.message('Start a new poem!');
     } else {
