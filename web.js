@@ -2,34 +2,6 @@ var express = require('express');
 var logfmt = require('logfmt');
 var twilio = require('twilio');
 var Firebase = require('firebase');
-var http = require('http');
-var q = require('q');
-var url = require('url');
-// var q = require('promised-io/promise');
-
-var httpGet = function (opts) {
-  var deferred = q.defer();
-  http.get(opts, function(response) {
-    deferred.resolve(response);
-  });
-  return deferred.promise;
-};
-
-function getMood(str){
-  var options = {
-    host: 'api.lymbix.com',
-    port: 80,
-    path: '/tonalize?article='+encodeURIComponent(str),
-    method: 'GET',
-    headers: {
-      'Authentication': 'e731075e67424ea761d9ed92db007d26f5d88d9c',
-      'Version': '2.2',
-      'Accept': 'application/json'
-    }
-  };
-  return httpGet(options);
-}
-
 
 var accountSid = 'ACd4f90f2571958e3ac3f697dabb9b45dc';
 var authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -39,8 +11,6 @@ var app = express();
 app.use(logfmt.requestLogger());
 app.use(express.bodyParser());
 
-
-
 var fbase = new Firebase('https://flickering-fire-2682.firebaseio.com/poems');
 
 var line = 1;
@@ -49,36 +19,6 @@ var poemContributers = []; //phone numbers of people who have contributed
 var poemString = ''; //full poem
 var prevLine = ''; //last line of poem
 var newPoem;
-
-// var req = http.request(options, function(res) {
-//   console.log('STATUS: ' + res.statusCode);
-//   console.log('HEADERS: ' + JSON.stringify(res.headers));
-//   res.setEncoding('utf8');
-//   res.on('data', function (chunk) {
-//     console.log('BODY: ' + chunk);
-//   });
-// });
-
-// // write data to request body
-// req.write('data\n');
-// req.write('data\n');
-// req.end();
-//
-app.get('/wtf', function(req, res) {
-  var dat = url.parse(req.url, true);
-  console.log(JSON.stringify(dat));
-  if (dat.query) {
-    getMood(dat.query['txt']).then(function(response) {
-      response.on('data', function(chunk) {
-        res.writeHead(200, {'Content-Type': 'text/json'});
-        res.end(chunk);
-      });
-    });
-  } else {
-    res.writeHead(400, {'Content-Type': 'text/json'});
-    res.end('{"error": "invalid data"}');
-  }
-});
 
 app.post('/sms', function(req, res) {
 
@@ -98,11 +38,6 @@ app.post('/sms', function(req, res) {
       newPoem = fbase.push( { 'counter': line,  'fulltext': poemString } );
     }
     prevLine = text; //replce last line
-
-    getMood(prevLine).then(function(response) {
-      console.log(response);
-    });
-
     poemString = poemString + '\n' + prevLine; //add last line to full poem
     var ref = newPoem.push( { 'number': author, 'text': text } );
     newPoem.update( { 'counter': line, 'fulltext': poemString } );
@@ -130,18 +65,18 @@ app.post('/sms', function(req, res) {
       poemContributers = [];
 
     }
-    //check to see if the author is already in poemContributers
+        //check to see if the author is already in poemContributers
     var authorFound = false;
     for(var h = 0; h < poemContributers.length; h++) {
       if(author === poemContributers[h]) {
         authorFound = true;
       }
-    }
+  }
 
   if(!authorFound){ //if author is not in poemContributers add him/her
-    poemContributers.push(author);
-  }
-  twiml.message('Thanks for your contribution.');
+      poemContributers.push(author);
+    }
+    twiml.message('Thanks for your contribution.');
 
     //ADD HUE stuff here send count, poemString, and prevLine to be analyzed
 
