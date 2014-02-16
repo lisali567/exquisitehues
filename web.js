@@ -20,8 +20,7 @@ app.post('/sms', function(req, res) {
     if(line==0) {
 	newPoem = fbase.push({'counter':line});
     }
-    newLine = newPoem.child();
-    newLine.set({'number':req.body.From, 'text':req.body.Body});
+    newLine = newPoem.push({'number':req.body.From, 'text':req.body.Body});
     line++;
     if( line == 4){
 	//    	poemNum++;
