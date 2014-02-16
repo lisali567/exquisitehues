@@ -119,7 +119,7 @@ app.post('/sms', function(req, res) {
       //send poem link to contributors
       for(var j = 0; j < poemContributers.length; j++) {
       	client.messages.create({
-    	body: "Wanna see the completed poem?\n Check it out at:\n https://exquisitehues.com/poems/" + newPoem, //change this l8r
+    	body: "Wanna see the completed poem?\n Check it out at:\n https://exquisitehues.com/poems/" + newPoem.name(), //change this l8r
     	to: poemContributers[j],
     	from: "+17184049006"
     }, function(err, message) {
