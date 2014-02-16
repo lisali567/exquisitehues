@@ -39,7 +39,7 @@ app.post('/sms', function(req, res) {
   var text = req.body.Body;
   var author = req.body.From;
 
-  var numIndex = -1;
+  var numIndex = -1; //look to see if number is in
   for(var i = 0; i < teleNumLine.length; i++) {
     if(author === teleNumLine[i]) {
       numIndex = i;
@@ -76,7 +76,17 @@ app.post('/sms', function(req, res) {
       teleNumPoem = [];
 
     }
+        //check to see if the author is already in teleNumPoem
+    var authorFound = false; 
+  	for(var h = 0; h < teleNumPoem.length; h++) {
+      if(author === teleNumPoem[h]) {
+        authorFound = h;
+      }
+	}
 
+	if(!authorFound){ //if author is not in teleNumPoem add him/her
+      teleNumPoem.push(author);
+    }
     twiml.message('Thanks for adding a line to the poem');
 
     //ADD HUE stuff here send count, poemString, and prevLine to be analyzed
@@ -87,7 +97,7 @@ app.post('/sms', function(req, res) {
     } else {
       twiml.message('Here\'s the last line:\n ' + prevLine + '\nrespond with the next one!');
     }
-    teleNumPoem.push(author);
+    teleNumLine.push(author);
   }
 
   res.writeHead(200, {'Content-Type': 'text/xml'});
