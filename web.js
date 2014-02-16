@@ -12,12 +12,14 @@ var fbase = new Firebase('https://flickering-fire-2682.firebaseio.com/poems');
 var line = 0;
 var teleNum = [];
 var poemString = "";
+var prevLine = "";
+var newPoem;
 
 app.post('/sms', function(req, res) {
 
   var twiml = new twilio.TwimlResponse();
-  var body = req.body.Body;
-  var from = req.body.From;
+  var text = req.body.Body;
+  var author = req.body.From;
 
   var numIndex = -1;
   for(var i = 0; i < teleNum.length; i++) {
@@ -30,8 +32,8 @@ app.post('/sms', function(req, res) {
     if(line === 0) {
       newPoem = fbase.push( { 'counter': line } );
     }
-    var newLine = newPoem.push( { 'number': req.body.From, 'text': req.body.Body } );
-    var prevLine = req.body.Body;
+    newPoem.push( { 'number': author, 'text': text } );
+    prevLine = text;
     poemString += prevLine;
     line++;
     teleNum = [];
