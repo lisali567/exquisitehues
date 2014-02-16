@@ -26,7 +26,7 @@ app.post('/sms', function(req, res) {
 	//    	poemNum++;
     	//currentPoem = fbase.child('poem' + poemNum)
     	//line = 1;
-	line == 0;
+	line = 0;
     }
     // currentPoem.push({'number':req.body.From, 'text':req.body.Body});
     res.writeHead(200, {'Content-Type': 'text/xml'});
