@@ -20,6 +20,6 @@ angular.module('exquisitehuesApp', [ 'ngRoute', 'firebase' ])
   });
 })
 .factory('LineService', ['$firebase', function($firebase) {
-  var ref = new Firebase('https://flickering-fire-2682.firebaseio.com/angulartest');
+  var ref = new Firebase('https://flickering-fire-2682.firebaseio.com/poems/lastLine');
   return $firebase(ref);
 }]);
