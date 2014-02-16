@@ -25,8 +25,8 @@ var fbase = new Firebase('https://flickering-fire-2682.firebaseio.com/poems');
 
 var line = 1;
 var teleNum = [];
-var poemString = '';
-var prevLine = '';
+var poemString = ''; //full poem
+var prevLine = ''; //last line of poem
 var newPoem;
 
 app.post('/sms', function(req, res) {
@@ -46,16 +46,16 @@ app.post('/sms', function(req, res) {
     if(line === 1) {
       newPoem = fbase.push( { 'counter': line,  'fulltext': poemString } );
     }
-    prevLine = text;
-    poemString += prevLine;
+    prevLine = text; //replce last line
+    poemString += prevLine; //add last line to full poem
     var ref = newPoem.push( { 'number': author, 'text': text } );
     newPoem.update( { 'counter': line, 'fulltext': poemString } );
     fbase.update( { 'lastLine': prevLine, 'lastRef': ref.name() } );
-    line++;
+    line++; //update line count
     teleNum = [];
     if(line === 5){
-      line = 1;
-      poemString = '';
+      line = 1; //reset line count
+      poemString = ''; //reset full poem string
     }
 
     twiml.message('Thanks for adding a line to the poem');
