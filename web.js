@@ -5,22 +5,44 @@ var twilio = require("twilio");
 var Firebase = require('firebase');
 var line = 0;
 var fbase = new Firebase('https://flickering-fire-2682.firebaseio.com/');
-//var poemNum = 1;
-//currentPoem = fbase.child('poem' + poemNum);
 var newPoem;
 var prevLine;
+var teleNum = [];
+//if firstTime is true, should NOT take body as line 1
+var firstTime = false;
+
 
 app.use(logfmt.requestLogger());
 app.use(express.bodyParser());
 
 app.post('/sms', function(req, res) {
 
-	//poem
+    //poem
     var twiml = new twilio.TwimlResponse();
-    
+    var body = req.body.Body;
+    var from = req.body.From;
+
+    //Sentence to join: 'Join the poem!'
+
+    for(i=0;i<teleNum.length;i++){
+	if(from==teleNum[i])
+	    {
+		if(body=="Join the poem!")
+		    {
+			twim1.message("lol");
+			return;
+		    }
+	    }
+    }
+    if(body=="Join the poem!")
+	{
+	    twiml.message("Start a new poem!");
+	    firstTime = true;
+	}
+    while(!firstTime) {   
     if(line==0) {
 	newPoem = fbase.push({'counter':line});
-	twiml.message("Start a new poem!");
+
 	prevLine = req.body.Body;
     }
     else {
@@ -29,17 +51,16 @@ app.post('/sms', function(req, res) {
     newLine = newPoem.push({'number':req.body.From, 'text':req.body.Body});
     prevLine = req.body.Body;
     line++;
+    teleNum.push(from);
     if( line == 4){
-	//    	poemNum++;
-    	//currentPoem = fbase.child('poem' + poemNum)
-    	//line = 1;
 	line = 0;
+	teleNum.length=0;
     }
-    // currentPoem.push({'number':req.body.From, 'text':req.body.Body});
+    
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
-
-    //    line++;
+    }
+    firstTime=false;
 });
 
 var port = Number(process.env.PORT || 5000);
