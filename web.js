@@ -8,6 +8,7 @@ var fbase = new Firebase('https://flickering-fire-2682.firebaseio.com/');
 //var poemNum = 1;
 //currentPoem = fbase.child('poem' + poemNum);
 var newPoem;
+var prevLine;
 
 app.use(logfmt.requestLogger());
 app.use(express.bodyParser());
@@ -16,11 +17,17 @@ app.post('/sms', function(req, res) {
 
 	//poem
     var twiml = new twilio.TwimlResponse();
-    twiml.message('Hello World, you said: ' + req.body.Body);
+    
     if(line==0) {
 	newPoem = fbase.push({'counter':line});
+	twiml.message("Start a new poem!");
+	prevLine = req.body.Body;
+    }
+    else {
+    twiml.message('Previous Line: ' + prevLine);
     }
     newLine = newPoem.push({'number':req.body.From, 'text':req.body.Body});
+    prevLine = req.body.Body;
     line++;
     if( line == 4){
 	//    	poemNum++;
