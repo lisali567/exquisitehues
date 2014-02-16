@@ -23,7 +23,7 @@ app.post('/sms', function(req, res) {
 
   var numIndex = -1;
   for(var i = 0; i < teleNum.length; i++) {
-    if(from === teleNum[i]) {
+    if(author === teleNum[i]) {
       numIndex = i;
     }
   }
@@ -52,7 +52,7 @@ app.post('/sms', function(req, res) {
     } else {
       twiml.message("Here's the last line: " + prevLine + "/nrespond with the next one!");
     }
-    teleNum.push(from);
+    teleNum.push(author);
   }
 
   res.writeHead(200, {'Content-Type': 'text/xml'});
