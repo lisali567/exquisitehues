@@ -1,0 +1,7 @@
+<ul ng-repeat="line in lines">
+  <li>{{line.author}}: {{line.text}}</li>
+</ul>
+<form ng-cloak ng-submit="addLine();">
+  <input type="text" ng-model="text"/>
+  <input type="submit" value="Send Line"/>
+</form>
