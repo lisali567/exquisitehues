@@ -2,7 +2,7 @@ var express = require('express');
 var logfmt = require('logfmt');
 var twilio = require('twilio');
 var Firebase = require('firebase');
-var $ = jQuery = require('jquery');
+//var $ = jQuery = require('jquery');
 //var websocket = require('websocket');
 var $ = require('jquery/dist/jquery')(window); 
 var lymbixLib = require('./lymbix/jquery.lymbix.js');
