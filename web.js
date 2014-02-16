@@ -19,7 +19,6 @@ var client = require('twilio')(accountSid, authToken);
 // });
 // }
 
-
 var app = express();
 app.use(logfmt.requestLogger());
 app.use(express.bodyParser());
@@ -89,15 +88,15 @@ app.post('/sms', function(req, res) {
 	if(!authorFound){ //if author is not in poemContributers add him/her
       poemContributers.push(author);
     }
-    twiml.message('Thanks for adding a line to the poem');
+    twiml.message('Thanks for your contribution.');
 
     //ADD HUE stuff here send count, poemString, and prevLine to be analyzed
 
   } else{ //msg was to request last line
     if(line === 1) {
-      twiml.message('Start a new poem!');
+      twiml.message('Start a new poem. Send me the first line.');
     } else {
-      twiml.message('Here\'s the last line:\n ' + prevLine + '\nrespond with the next one!');
+      twiml.message('Here\'s the last line:\n ' + prevLine + '\nsend me the next one!');
     }
     teleNumLine.push(author);
   }
