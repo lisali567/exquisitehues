@@ -32,10 +32,10 @@ app.post('/sms', function(req, res) {
     if(line === 1) {
       newPoem = fbase.push( { 'counter': line,  'fulltext': poemString } );
     }
-    var ref = newPoem.push( { 'number': author, 'text': text } );
-    newPoem.update( { 'counter': line, 'fulltext': poemString } );
     prevLine = text;
     poemString += prevLine;
+    var ref = newPoem.push( { 'number': author, 'text': text } );
+    newPoem.update( { 'counter': line, 'fulltext': poemString } );
     line++;
     fbase.push( { 'lastRef': ref });
     teleNum = [];
