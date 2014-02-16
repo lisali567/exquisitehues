@@ -2,6 +2,20 @@ var express = require('express');
 var logfmt = require('logfmt');
 var twilio = require('twilio');
 var Firebase = require('firebase');
+var $ = jQuery = require('jquery');
+var lymbixLib = require('./lymbix/jquery.lymbix.js');
+var lymbix = $.lymbix("e731075e67424ea761d9ed92db007d26f5d88d9c");
+// lymbix.tonalizeDetailed(phrase, function (object) {
+//   $("#phrase").html(object['article']);
+//   $("#text").html(object['dominant_emotion'].replace("_"," & "));
+//   var rgb = evalColor(object['article_sentiment']['score']);
+//   console.log("hi");
+//   $("#colors").css('color', "rgb("+rgb[0]+", "+rgb[1]+", "+rgb[2]+")");
+//   console.log(object['article_sentiment']['score']);
+//   console.log(rgb[2]);
+// });
+// }
+
 
 var app = express();
 app.use(logfmt.requestLogger());
