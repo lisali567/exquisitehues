@@ -6,7 +6,8 @@
     "express": "~3.4.8",
     "logfmt": "~0.21.0",
     "firebase": "~1.0.5",
-    "jquery": "~2.1.0"
+    "jquery": "~2.1.0",
+    "websocket": "~1.0.8"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
