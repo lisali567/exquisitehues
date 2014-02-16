@@ -11,8 +11,8 @@ var fbase = new Firebase('https://flickering-fire-2682.firebaseio.com/poems');
 
 var line = 1;
 var teleNum = [];
-var poemString = "";
-var prevLine = "";
+var poemString = '';
+var prevLine = '';
 var newPoem;
 
 app.post('/sms', function(req, res) {
@@ -40,18 +40,18 @@ app.post('/sms', function(req, res) {
     teleNum = [];
     if(line === 5){
       line = 1;
-      poemString = "";
+      poemString = '';
     }
 
-    twiml.message("Thanks for adding a line to the poem");
+    twiml.message('Thanks for adding a line to the poem');
 
     //ADD HUE stuff here send count, poemString, and prevLine to be analyzed
 
   } else{
     if(line === 1) {
-      twiml.message("Start a new poem!");
+      twiml.message('Start a new poem!');
     } else {
-      twiml.message("Here's the last line:\n " + prevLine + "\nrespond with the next one!");
+      twiml.message('Here\'s the last line:\n ' + prevLine + '\nrespond with the next one!');
     }
     teleNum.push(author);
   }
