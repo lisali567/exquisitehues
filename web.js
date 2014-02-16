@@ -4,7 +4,7 @@ var twilio = require('twilio');
 var Firebase = require('firebase');
 //var $ = jQuery = require('jquery');
 //var websocket = require('websocket');
-var $ = require('jquery/dist/jquery')(window); 
+//var $ = require('jquery/dist/jquery')(window); 
 var lymbixLib = require('./lymbix/jquery.lymbix.js');
 var lymbix = $.lymbix("e731075e67424ea761d9ed92db007d26f5d88d9c");
 var accountSid = 'ACd4f90f2571958e3ac3f697dabb9b45dc';
