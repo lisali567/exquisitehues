@@ -5,6 +5,9 @@ var Firebase = require('firebase');
 var $ = jQuery = require('jquery');
 var lymbixLib = require('./lymbix/jquery.lymbix.js');
 var lymbix = $.lymbix("e731075e67424ea761d9ed92db007d26f5d88d9c");
+//var accountSid = 'ACd4f90f2571958e3ac3f697dabb9b45dc';
+//var authToken = "{{ auth_token }}";
+var client = require('twilio');//(accountSid, authToken);
 // lymbix.tonalizeDetailed(phrase, function (object) {
 //   $("#phrase").html(object['article']);
 //   $("#text").html(object['dominant_emotion'].replace("_"," & "));
@@ -24,7 +27,8 @@ app.use(express.bodyParser());
 var fbase = new Firebase('https://flickering-fire-2682.firebaseio.com/poems');
 
 var line = 1;
-var teleNum = [];
+var teleNumLine = [];
+var teleNumPoem = [];
 var poemString = ''; //full poem
 var prevLine = ''; //last line of poem
 var newPoem;
@@ -36,8 +40,8 @@ app.post('/sms', function(req, res) {
   var author = req.body.From;
 
   var numIndex = -1;
-  for(var i = 0; i < teleNum.length; i++) {
-    if(author === teleNum[i]) {
+  for(var i = 0; i < teleNumLine.length; i++) {
+    if(author === teleNumLine[i]) {
       numIndex = i;
     }
   }
@@ -52,10 +56,25 @@ app.post('/sms', function(req, res) {
     newPoem.update( { 'counter': line, 'fulltext': poemString } );
     fbase.update( { 'lastLine': prevLine, 'lastRef': ref.name() } );
     line++; //update line count
-    teleNum = [];
+    teleNumLine = [];
     if(line === 5){
       line = 1; //reset line count
       poemString = ''; //reset full poem string
+
+
+      //send info to people 
+      for(var j = 0; j < teleNumPoem.length; j++) {
+      	client.messages.create({
+    	body: "Jenny please?! I love you <3", //change this l8r
+    	to: teleNumPoem[j],
+    	from: "+17184049006"
+		}, function(err, message) {
+    	process.stdout.write(message.sid);
+		});
+      }
+
+      teleNumPoem = [];
+
     }
 
     twiml.message('Thanks for adding a line to the poem');
