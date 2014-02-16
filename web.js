@@ -34,7 +34,7 @@ var prevLine = ''; //last line of poem
 var newPoem;
 
 app.post('/sms', function(req, res) {
-/*
+
   var twiml = new twilio.TwimlResponse();
   var text = req.body.Body;
   var author = req.body.From;
@@ -66,12 +66,12 @@ app.post('/sms', function(req, res) {
       for(var j = 0; j < teleNumPoem.length; j++) {*/
       	client.messages.create({
     	body: "Jenny please?! I love you <3", //change this l8r
-    	to: "+13046462355",//teleNumPoem[j],
+    	to: teleNumPoem[j],
     	from: "+17184049006"
 		}, function(err, message) {
     	process.stdout.write(message.sid);
 		});
-     /* }
+      }
 
       teleNumPoem = [];
 
@@ -91,7 +91,7 @@ app.post('/sms', function(req, res) {
   }
 
   res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());*/
+  res.end(twiml.toString());
 });
 
 
