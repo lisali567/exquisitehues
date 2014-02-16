@@ -5,9 +5,9 @@ var Firebase = require('firebase');
 var $ = jQuery = require('jquery');
 var lymbixLib = require('./lymbix/jquery.lymbix.js');
 var lymbix = $.lymbix("e731075e67424ea761d9ed92db007d26f5d88d9c");
-//var accountSid = 'ACd4f90f2571958e3ac3f697dabb9b45dc';
-//var authToken = "{{ auth_token }}";
-var client = require('twilio');//(accountSid, authToken);
+var accountSid = 'ACd4f90f2571958e3ac3f697dabb9b45dc';
+var authToken = '24cdd8f1cae6c984a78839b7faa15c6d';
+var client = require('twilio')(accountSid, authToken);
 // lymbix.tonalizeDetailed(phrase, function (object) {
 //   $("#phrase").html(object['article']);
 //   $("#text").html(object['dominant_emotion'].replace("_"," & "));
