@@ -13,7 +13,7 @@ angular.module('exquisitehuesApp', [ 'ngRoute', 'firebase' ])
     templateUrl: 'views/archive.html',
     controller: 'ArchiveCtrl'
   })
- .when('/poems/:poemid', {
+  .when('/poems/:poemid', {
     templateUrl: 'views/poem.html',
     action: 'poems.view',
     controller: 'PoemCtrl'

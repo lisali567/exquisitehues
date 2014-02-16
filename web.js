@@ -2,6 +2,7 @@ var express = require('express');
 var logfmt = require('logfmt');
 var twilio = require('twilio');
 var Firebase = require('firebase');
+var http = require('http');
 
 var accountSid = 'ACd4f90f2571958e3ac3f697dabb9b45dc';
 var authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -20,6 +21,44 @@ var poemString = ''; //full poem
 var prevLine = ''; //last line of poem
 var newPoem;
 
+var options = {
+  host: 'api.lymbix.com',
+  port: 80,
+  path: '/tonalize?article=He+was+happy+and+surprised+instead+of+being+an+angry+guy.&reference_id=1235',
+  method: 'GET',
+  headers: {
+    'Authentication': 'e731075e67424ea761d9ed92db007d26f5d88d9c',
+    'Version': '2.2',
+    'Accept': 'application/json'
+  }
+};
+
+var callback = function(response) {
+  var str = ''
+  response.on('data', function (chunk) {
+    str += chunk;
+  });
+
+  response.on('end', function () {
+    console.log(str);
+  });
+}
+
+var lymReq = http.request(options, callback);
+
+var req = http.request(options, function(res) {
+  console.log('STATUS: ' + res.statusCode);
+  console.log('HEADERS: ' + JSON.stringify(res.headers));
+  res.setEncoding('utf8');
+  res.on('data', function (chunk) {
+    console.log('BODY: ' + chunk);
+  });
+});
+
+// write data to request body
+req.write('data\n');
+req.write('data\n');
+req.end();
 app.post('/sms', function(req, res) {
 
   var twiml = new twilio.TwimlResponse();
@@ -66,7 +105,7 @@ app.post('/sms', function(req, res) {
 
     }
         //check to see if the author is already in poemContributers
-    var authorFound = false; 
+    var authorFound = false;
   	for(var h = 0; h < poemContributers.length; h++) {
       if(author === poemContributers[h]) {
         authorFound = true;
