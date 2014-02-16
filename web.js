@@ -30,10 +30,10 @@ app.post('/sms', function(req, res) {
 
   if(numIndex !== -1) {
     if(line === 1) {
-      newPoem = fbase.push( { 'counter': line } );
+      newPoem = fbase.push( { 'counter': line,  'full-text': poemString } );
     }
     newPoem.push( { 'number': author, 'text': text } );
-    newPoem.update( { 'counter': line } );
+    newPoem.update( { 'counter': line, 'full-text': poemString } );
     prevLine = text;
     poemString += prevLine;
     line++;
