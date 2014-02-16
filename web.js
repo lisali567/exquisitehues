@@ -63,7 +63,7 @@ app.post('/sms', function(req, res) {
 
 
       //send info to people 
-      for(var j = 0; j < teleNumPoem.length; j++) {*/
+      for(var j = 0; j < teleNumPoem.length; j++) {
       	client.messages.create({
     	body: "Jenny please?! I love you <3", //change this l8r
     	to: teleNumPoem[j],
