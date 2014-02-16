@@ -2,39 +2,11 @@ var express = require('express');
 var logfmt = require('logfmt');
 var twilio = require('twilio');
 var Firebase = require('firebase');
-//var $ = jQuery = require('jquery');
-//var websocket = require('websocket');
-//var $ = require('jquery/dist/jquery')(window); 
-var lymbixLib = require('./lymbix/jquery.lymbix.js');
-var lymbix = $.lymbix("e731075e67424ea761d9ed92db007d26f5d88d9c");
+
 var accountSid = 'ACd4f90f2571958e3ac3f697dabb9b45dc';
 var authToken = process.env.TWILIO_AUTH_TOKEN;
 var client = require('twilio')(accountSid, authToken);
-/*var hue = require("node-hue-api"), HueApi = hue.HueApi, lightState = hue.lightState;
 
-
-var host = "192.168.1.129",
-    username = "newdeveloper",
-    api,
-    state;
-
-
-api = new HueApi(host, username);
-
-// lymbix.tonalizeDetailed(phrase, function (object) {
-//   $("#phrase").html(object['article']);
-//   $("#text").html(object['dominant_emotion'].replace("_"," & "));
-//   var rgb = evalColor(object['article_sentiment']['score']);
-//   console.log("hi");
-//   $("#colors").css('color', "rgb("+rgb[0]+", "+rgb[1]+", "+rgb[2]+")");
-//   console.log(object['article_sentiment']['score']);
-//   console.log(rgb[2]);
-// });
-// }
-
-var dom_emo, intensity;
-
-*/
 var app = express();
 app.use(logfmt.requestLogger());
 app.use(express.bodyParser());
@@ -107,35 +79,6 @@ app.post('/sms', function(req, res) {
     twiml.message('Thanks for your contribution.');
 
     //ADD HUE stuff here send count, poemString, and prevLine to be analyzed
-/*
-    lymbix.tonalize(text, function (obj) {
-	    dom_emo = obj['dominant_emotion'];
-	    console.log("h");
-	    intensity = obj['intense_sentence']['intensity'];
-	});
-
-    colorEmotion = { "enjoyment_elation":145,
-		     "affection_friendliness":340,
-		     "amusement_excitement":128,
-		     "contentment_gratitude":80,
-		     "fear_uneasiness":247,
-		     "sadness_grief":257,
-		     "humiliation_shame":38,
-		     "anger_loathing":0 };
-
-    if(dom_emo!="Neutral") {
-	console.log(dom_emo);
-	var huenum = colorEmotion.dom_emo;
-	console.log(huenum);
-	state = lightState.create().on().hsl(100, 100, 100);
-    }
-    else state = lightState.create().off();
-
-    api.setLightState(1, state, function(err, lights) {
-	    if(err) throw err;
-	    displayResult(lights);
-	});
-*/
 
   } else{ //msg was to request last line
     if(line === 1) {
