@@ -11,8 +11,8 @@ var fbase = new Firebase('https://flickering-fire-2682.firebaseio.com/poems');
 
 var line = 1;
 var teleNum = [];
-var poemString = "";
-var prevLine = "";
+var poemString = '';
+var prevLine = '';
 var newPoem;
 
 app.post('/sms', function(req, res) {
@@ -30,28 +30,29 @@ app.post('/sms', function(req, res) {
 
   if(numIndex !== -1) {
     if(line === 1) {
-      newPoem = fbase.push( { 'counter': line,  'full-text': poemString } );
+      newPoem = fbase.push( { 'counter': line,  'fulltext': poemString } );
     }
-    newPoem.push( { 'number': author, 'text': text } );
-    newPoem.update( { 'counter': line, 'full-text': poemString } );
+    var ref = newPoem.push( { 'number': author, 'text': text } );
+    newPoem.update( { 'counter': line, 'fulltext': poemString } );
     prevLine = text;
     poemString += prevLine;
     line++;
+    fbase.push( { 'lastRef': ref });
     teleNum = [];
     if(line === 5){
       line = 1;
-      poemString = "";
+      poemString = '';
     }
 
-    twiml.message("Thanks for adding a line to the poem");
+    twiml.message('Thanks for adding a line to the poem');
 
     //ADD HUE stuff here send count, poemString, and prevLine to be analyzed
 
   } else{
     if(line === 1) {
-      twiml.message("Start a new poem!");
+      twiml.message('Start a new poem!');
     } else {
-      twiml.message("Here's the last line:\n " + prevLine + "\nrespond with the next one!");
+      twiml.message('Here\'s the last line:\n ' + prevLine + '\nrespond with the next one!');
     }
     teleNum.push(author);
   }
