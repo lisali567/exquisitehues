@@ -53,27 +53,27 @@ app.post('/sms', function(req, res) {
 
       //send poem link to contributors
       for(var j = 0; j < poemContributers.length; j++) {
-      	client.messages.create({
-    	body: "Wanna see the completed poem?\n Check it out at:\n https://exquisitehues.com/poems/" + newPoem, //change this l8r
-    	to: poemContributers[j],
-    	from: "+17184049006"
-		}, function(err, message) {
-    	process.stdout.write(message.sid);
-		});
+        client.messages.create({
+      body: "Wanna see the completed poem?\n Check it out at:\n https://exquisitehues.com/poems/" + newPoem, //change this l8r
+      to: poemContributers[j],
+      from: "+17184049006"
+    }, function(err, message) {
+      process.stdout.write(message.sid);
+    });
       }
 
       poemContributers = [];
 
     }
         //check to see if the author is already in poemContributers
-    var authorFound = false; 
-  	for(var h = 0; h < poemContributers.length; h++) {
+    var authorFound = false;
+    for(var h = 0; h < poemContributers.length; h++) {
       if(author === poemContributers[h]) {
         authorFound = true;
       }
-	}
+  }
 
-	if(!authorFound){ //if author is not in poemContributers add him/her
+  if(!authorFound){ //if author is not in poemContributers add him/her
       poemContributers.push(author);
     }
     twiml.message('Thanks for your contribution.');
