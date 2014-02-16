@@ -5,15 +5,18 @@ angular.module('exquisitehuesApp', [ 'ngRoute', 'firebase' ])
   $routeProvider
   .when('/', {
     templateUrl: 'views/main.html',
-    controller: 'MainCtrl'
   })
   .when('/about', {
     templateUrl: 'views/about.html',
-    controller: 'MainCtrl'
   })
   .when('/archive', {
     templateUrl: 'views/archive.html',
-    controller: 'MainCtrl'
+    controller: 'ArchiveCtrl'
+  })
+ .when('/poems/:poemid', {
+    templateUrl: 'views/poem.html',
+    action: 'poems.view',
+    controller: 'PoemCtrl'
   })
   .otherwise({
     redirectTo: '/'

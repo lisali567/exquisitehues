@@ -22,5 +22,6 @@
     "angular": false,
     "Firebase": false
   },
-  "debug": false
+  "debug": false,
+  "jquery": true
 }
