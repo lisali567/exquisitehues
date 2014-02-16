@@ -51,7 +51,7 @@ app.post('/sms', function(req, res) {
       newPoem = fbase.push( { 'counter': line,  'fulltext': poemString } );
     }
     prevLine = text; //replce last line
-    poemString = poemString + '\n' + prevLine; //add last line to full poem
+    poemString = poemString + '/n' + prevLine; //add last line to full poem
     var ref = newPoem.push( { 'number': author, 'text': text } );
     newPoem.update( { 'counter': line, 'fulltext': poemString } );
     fbase.update( { 'lastLine': prevLine, 'lastRef': ref.name() } );
@@ -82,7 +82,7 @@ app.post('/sms', function(req, res) {
     var authorFound = false; 
   	for(var h = 0; h < poemContributers.length; h++) {
       if(author === poemContributers[h]) {
-        authorFound = h;
+        authorFound = true;
       }
 	}
 
