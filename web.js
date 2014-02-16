@@ -33,6 +33,7 @@ app.post('/sms', function(req, res) {
       newPoem = fbase.push( { 'counter': line } );
     }
     newPoem.push( { 'number': author, 'text': text } );
+    newPoem.update( { 'counter': line } );
     prevLine = text;
     poemString += prevLine;
     line++;
@@ -50,7 +51,7 @@ app.post('/sms', function(req, res) {
     if(line === 0) {
       twiml.message("Start a new poem!");
     } else {
-      twiml.message("Here's the last line: " + prevLine + "/nrespond with the next one!");
+      twiml.message("Here's the last line: " + prevLine + "\nrespond with the next one!");
     }
     teleNum.push(author);
   }
