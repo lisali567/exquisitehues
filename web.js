@@ -106,7 +106,7 @@ app.post('/sms', function(req, res) {
     twiml.message('Thanks for your contribution.');
 
     //ADD HUE stuff here send count, poemString, and prevLine to be analyzed
-/*
+
     lymbix.tonalize(text, function (obj) {
 	    dom_emo = obj['dominant_emotion'];
 	    console.log("h");
@@ -134,7 +134,7 @@ app.post('/sms', function(req, res) {
 	    if(err) throw err;
 	    displayResult(lights);
 	});
-*/
+
 
   } else{ //msg was to request last line
     if(line === 1) {
