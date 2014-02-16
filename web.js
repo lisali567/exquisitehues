@@ -87,7 +87,7 @@ app.post('/sms', function(req, res) {
     } else {
       twiml.message('Here\'s the last line:\n ' + prevLine + '\nrespond with the next one!');
     }
-    teleNum.push(author);
+    teleNumPoem.push(author);
   }
 
   res.writeHead(200, {'Content-Type': 'text/xml'});
