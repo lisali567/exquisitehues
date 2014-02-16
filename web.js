@@ -64,7 +64,7 @@ app.post('/sms', function(req, res) {
       newPoem = fbase.push( { 'counter': line,  'fulltext': poemString } );
     }
     prevLine = text; //replce last line
-    poemString = poemString + '/n' + prevLine; //add last line to full poem
+    poemString = poemString + '\n' + prevLine; //add last line to full poem
     var ref = newPoem.push( { 'number': author, 'text': text } );
     newPoem.update( { 'counter': line, 'fulltext': poemString } );
     fbase.update( { 'lastLine': prevLine, 'lastRef': ref.name() } );
@@ -80,7 +80,7 @@ app.post('/sms', function(req, res) {
       //send poem link to contributors
       for(var j = 0; j < poemContributers.length; j++) {
       	client.messages.create({
-    	body: "Wanna see the completed poem? check out: linkkks", //change this l8r
+    	body: "Wanna see the completed poem?\n Check it out at:\n https://exquisitehues.com/poems/" + newPoem, //change this l8r
     	to: poemContributers[j],
     	from: "+17184049006"
 		}, function(err, message) {
