@@ -6,7 +6,7 @@ var $ = jQuery = require('jquery');
 var lymbixLib = require('./lymbix/jquery.lymbix.js');
 var lymbix = $.lymbix("e731075e67424ea761d9ed92db007d26f5d88d9c");
 var accountSid = 'ACd4f90f2571958e3ac3f697dabb9b45dc';
-var authToken = '24cdd8f1cae6c984a78839b7faa15c6d';
+var authToken = process.env.TWILIO_AUTH_TOKEN;
 var client = require('twilio')(accountSid, authToken);
 // lymbix.tonalizeDetailed(phrase, function (object) {
 //   $("#phrase").html(object['article']);
